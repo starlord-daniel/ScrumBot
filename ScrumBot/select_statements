@@ -1,0 +1,8 @@
+
+// select top five tasks where status is todo and 
+SELECT TOP (5)[Id]
+      ,[Titel]
+  FROM [SCRUM].[Aufgaben]
+  WHERE [STATUS] = 1
+  AND [ProjektId] = %VALUE%
+
