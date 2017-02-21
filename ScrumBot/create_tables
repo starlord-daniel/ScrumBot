@@ -29,6 +29,7 @@ CREATE TABLE SCRUM.Member
 	Name varchar(32) NOT NULL,
 	Surname varchar(32) NOT NULL
 )
+
 CREATE TABLE SCRUM.Aufgaben
 (
 	Id int NOT NULL PRIMARY KEY,
@@ -38,5 +39,7 @@ CREATE TABLE SCRUM.Aufgaben
 	Points int NULL,
 	Owner int NULL REFERENCES SCRUM.Member(Id),
 	Status int NOT NULL,
-	Start datetime NULL
+	Start datetime NULL,
+	SprintId int NOT NULL REFERENCES SCRUM.Sprints(Id),
+	ProjektId int NOT NULL REFERENCES SCRUM.Projekt(Id)
 )

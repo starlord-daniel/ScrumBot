@@ -64,9 +64,10 @@ INSERT INTO [SCRUM].[Aufgaben]
            ,[Points]
            ,[Owner]
            ,[Status]
-           ,[Start])
+           ,[Start]
+		   ,[SprintId]
+		   ,[ProjektId])
      VALUES
-           (1, 'Entwicklungsumgebung aufsetzen', 'Azure zum Laufen kriegen, Github Accounts anlegen und loslegen', 1, 5, 1, 2, '2017-02-21 09:00:00'),
-           (2, 'Datenbank erzeugen', 'Microsoft SQL Datenbank erstellen und befüllen', 2, 3, 3, 2, '2017-02-21 09:00:00')
+           (1, 'Entwicklungsumgebung aufsetzen', 'Azure zum Laufen kriegen, Github Accounts anlegen und loslegen', 1, 5, 1, 2, '2017-02-21 09:00:00',1,1),
+           (2, 'Datenbank erzeugen', 'Microsoft SQL Datenbank erstellen und befüllen', 2, 3, 3, 2, '2017-02-21 09:00:00',1,1)
 GO
-
