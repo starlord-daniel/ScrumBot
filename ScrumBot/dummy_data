@@ -1,0 +1,72 @@
+USE [scrum]
+GO
+
+INSERT INTO [SCRUM].[Projekt]
+           ([Id]
+           ,[Name]
+           ,[Laenge]
+           ,[StoryPoints])
+     VALUES
+           (1, 'Hackathon', 2, 42)
+GO
+
+
+USE [scrum]
+GO
+
+INSERT INTO [SCRUM].[Stakeholder]
+           ([Id]
+           ,[ProjektId]
+           ,[Name]
+           ,[Surname])
+     VALUES
+           (1, 1, 'Daniel','Heinze'),
+           (2, 1, 'Markus','Hübner'),
+           (3, 1, 'Simon','Ebner'),
+           (4, 1, 'Tyler','Ayers'),
+           (5, 1, 'Rudolph','Mottinger')
+
+GO
+
+
+INSERT INTO [SCRUM].[Member]
+           ([Id]
+           ,[ProjektId]
+           ,[Name]
+           ,[Surname])
+     VALUES
+           (1, 1, 'Daniel','Heinze'),
+           (2, 1, 'Markus','Hübner'),
+           (3, 1, 'Simon','Ebner')
+
+GO
+
+USE [scrum]
+GO
+
+INSERT INTO [SCRUM].[Sprints]
+           ([Id]
+           ,[ProjektId]
+           ,[Start]
+           ,[Ende])
+     VALUES
+           (2,1,'2017-02-22 09:00:00','2017-02-22 16:00:00')
+GO
+
+USE [scrum]
+GO
+
+INSERT INTO [SCRUM].[Aufgaben]
+           ([Id]
+           ,[Titel]
+           ,[Beschreibung]
+           ,[Prio]
+           ,[Points]
+           ,[Owner]
+           ,[Status]
+           ,[Start])
+     VALUES
+           (1, 'Entwicklungsumgebung aufsetzen', 'Azure zum Laufen kriegen, Github Accounts anlegen und loslegen', 1, 5, 1, 2, '2017-02-21 09:00:00'),
+           (2, 'Datenbank erzeugen', 'Microsoft SQL Datenbank erstellen und befüllen', 2, 3, 3, 2, '2017-02-21 09:00:00')
+GO
+

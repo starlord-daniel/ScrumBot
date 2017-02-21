@@ -1,0 +1,42 @@
+CREATE TABLE SCRUM.Projekt
+(
+	Id int NOT NULL PRIMARY KEY ,
+	Name varchar(32) NOT NULL,
+	Laenge int NOT NULL,
+	StoryPoints int NOT NULL
+)
+
+CREATE TABLE SCRUM.Stakeholder
+(
+	Id int NOT NULL PRIMARY KEY,
+	ProjektId int NOT NULL REFERENCES SCRUM.Projekt(Id),
+	Name varchar(32) NOT NULL,
+	Surname varchar(32) NOT NULL
+)
+
+CREATE TABLE SCRUM.Sprints
+(
+	Id int NOT NULL PRIMARY KEY,
+	ProjektId int NOT NULL REFERENCES SCRUM.Projekt(Id),
+	Start datetime NULL,
+	Ende datetime NULL
+)
+
+CREATE TABLE SCRUM.Member
+(
+	Id int NOT NULL PRIMARY KEY,
+	ProjektId int NOT NULL REFERENCES Scrum.Projekt(Id),
+	Name varchar(32) NOT NULL,
+	Surname varchar(32) NOT NULL
+)
+CREATE TABLE SCRUM.Aufgaben
+(
+	Id int NOT NULL PRIMARY KEY,
+	Titel varchar(100) NOT NULL,
+	Beschreibung varchar(300) NULL,
+	Prio int NOT NULL,
+	Points int NULL,
+	Owner int NULL REFERENCES SCRUM.Member(Id),
+	Status int NOT NULL,
+	Start datetime NULL
+)
