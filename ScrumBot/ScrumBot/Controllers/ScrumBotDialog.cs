@@ -91,7 +91,7 @@ namespace ScrumBot.Controllers
         {
             var comment = await result;
 
-            ScrumData.InsertComment(comment);
+            ScrumData.insertComment(comment);
 
             await context.PostAsync("Der Kommentar wurde erfolgreich hochgeladen.");
             context.Wait(HomeBotDialog);
