@@ -10,6 +10,6 @@ We have defined 4 categories of functionality for this bot:
 
 2. Backlog: Lets the bot user create to and delete tasks from the backlog.
 
-3. Planning: Lets the user assign storypoint per task of the sprint. This value will later be user to define the sprint components
+3. Comment: Send comments on your current sprint which triggers an Azure logic app. This app detects the sentiment of the message and send a mail to the team supervisor.
 
 4. Status: Gives the user the status of the current sprint, in form of Todo's, Do's and done's
