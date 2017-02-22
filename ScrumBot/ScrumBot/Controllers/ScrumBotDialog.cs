@@ -73,10 +73,28 @@ namespace ScrumBot.Controllers
                     }
                     break;
                 case "Kommentieren":
+                    {
+                        PromptDialog.Text(
+                            context: context,
+                            resume: NewComment,
+                            prompt: "Schreibe deinen Kommentar zur aktuellen Aufgabe."
+                            );
+                    }
+
                     break;
                 default:
                     break;
             }
+        }
+
+        private async Task NewComment(IDialogContext context, IAwaitable<string> result)
+        {
+            var comment = await result;
+
+            ScrumData.InsertComment(comment);
+
+            await context.PostAsync("Der Kommentar wurde erfolgreich hochgeladen.");
+            context.Wait(HomeBotDialog);
         }
 
         private async Task CreateProject(IDialogContext context, IAwaitable<string> result)
