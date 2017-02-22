@@ -38,6 +38,18 @@ namespace ScrumBot.Data
 
     public static class ScrumData
     {
+        internal static void insertComment(String comment)
+        {
+            using (SqlConnection connection = new SqlConnection(String.Format("Server=tcp:scrumbot.database.windows.net,1433;Initial Catalog=scrum;Persist Security Info=False;User ID={0};Password={1};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;", "scrumAdmin", "xce3518@")))
+            {
+                var query = String.Format("INSERT INTO [SCRUM].[Questions] ([Text],[Score],[Owner],[Aufgabe],[Datum]) VALUES ('{0}', NULL, 2, 1,'2017-02-21 09:00:00')", comment);
+                SqlCommand command = new SqlCommand(query, connection);
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+        }
+
         /// <summary>
         /// Return the status of the current project: TODO, DO, DONE
         /// </summary>
