@@ -87,7 +87,7 @@ namespace ScrumBot.Data
         /// Call the database to get all tasks in a project
         /// </summary>
         /// <param name="project">The current project the task is in.</param>
-        internal static IMessageActivity GetTasks(IDialogContext context, string project)
+        internal static List<string> GetTasks(IDialogContext context, string project)
         {
             var tasks = new List<string> {
                 "Facial Recognition",
@@ -98,38 +98,7 @@ namespace ScrumBot.Data
 
             PerformSQLQuery("");
 
-            var message = GetTasksCards(context, project, tasks);
-
-            return message;
-        }
-
-        private static IMessageActivity GetTasksCards(IDialogContext context, string project, List<string> tasks)
-        {
-            var m = context.MakeMessage();
-            m.Recipient = context.MakeMessage().From;
-            m.Type = "message";
-            m.Attachments = new List<Attachment>();
-            m.AttachmentLayout = AttachmentLayoutTypes.List;
-
-            List<string> titles = new List<string>();
-
-            foreach (var item in tasks)
-            {
-                titles.Add(item);
-            }
-
-            for (int i = 0; i < tasks.Count; i++)
-            {
-                ThumbnailCard card = new ThumbnailCard()
-                {
-                    Title = titles[i]
-                };
-
-                Attachment plAttachment = card.ToAttachment();
-                m.Attachments.Add(plAttachment);
-            }
-
-            return m;
+            return tasks;
         }
 
         private static void PerformSQLQuery(string query)

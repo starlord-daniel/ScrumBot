@@ -14,6 +14,8 @@ namespace ScrumBot.Controllers
     {
         private string project = "Hackathon";
 
+        private Dictionary<string, string> newProjectInfos = new Dictionary<string, string>();
+        Dictionary<string, int> taskMapping = new Dictionary<string, int>();
 
         public async Task StartAsync(IDialogContext context)
         {
@@ -26,7 +28,7 @@ namespace ScrumBot.Controllers
             PromptDialog.Choice(
                     context: context,
                     resume: AfterResetAsync,
-                    options: new List<string> { "Neues Projekt", "Backlog", "Planung", "Status" },
+                    options: new List<string> { "Neues Projekt", "Backlog", "Status", "Kommentieren" },
                     prompt: "Hi, ich bin der Scrum Helper. was kann ich für dich erledigen?",
                     retry: "Bitte wähle eine der angezeigten Optionen.",
                     promptStyle: PromptStyle.Auto
@@ -40,7 +42,13 @@ namespace ScrumBot.Controllers
             switch (r)
             {
                 case "Neues Projekt":
-                    context.Wait(NewProjectDialog);
+                    {
+                        PromptDialog.Text(
+                            context: context,
+                            resume: CreateProject,
+                            prompt: "Wie soll ihr neues Projekt heißen?"
+                        );
+                    }
                     break;
                 case "Backlog":
                     {
@@ -54,15 +62,6 @@ namespace ScrumBot.Controllers
                             );
                     }
                     break;
-                case "Planung":
-                    {
-                        // Get tasks from database
-                        var taskMessage = ScrumData.GetTasks(context, project);
-
-                        await context.PostAsync(taskMessage);
-                        context.Wait(HomeBotDialog);
-                    }
-                    break;
                 case "Status":
                     { 
                         // Return the current status
@@ -73,11 +72,63 @@ namespace ScrumBot.Controllers
                         context.Wait(HomeBotDialog);
                     }
                     break;
+                case "Kommentieren":
+                    break;
                 default:
                     break;
             }
+        }
 
-            // await context.PostAsync($"You chose: " + r);
+        private async Task CreateProject(IDialogContext context, IAwaitable<string> result)
+        {
+            // save project name
+            newProjectInfos["projectName"] = await result;
+
+            // Get length and points for sprints
+            PromptDialog.Text(
+                context: context,
+                resume: SprintDefinition,
+                prompt: "Wie lang soll ein Sprint sein (Tage) und wie viele Points pro Sprint? Format: 3,5"
+            );
+
+        }
+
+        private async Task SprintDefinition(IDialogContext context, IAwaitable<string> result)
+        {
+            // save project name
+            newProjectInfos["sprintInfos"] = await result;
+
+            // Get length and points for sprints
+            PromptDialog.Text(
+                context: context,
+                resume: StakeholdersDefinition,
+                prompt: "Wer sind die Stakeholders?"
+            );
+        }
+
+        private async Task StakeholdersDefinition(IDialogContext context, IAwaitable<string> result)
+        {
+            // save project name
+            newProjectInfos["stakeholders"] = await result;
+
+            // Get length and points for sprints
+            PromptDialog.Text(
+                context: context,
+                resume: TeammatesDefinition,
+                prompt: "Wer sind die Teammitglieder (Komma getrennt)?"
+            );
+        }
+
+        private async Task TeammatesDefinition(IDialogContext context, IAwaitable<string> result)
+        {
+            // save project name
+            newProjectInfos["stakeholders"] = await result;
+
+            // create project in database
+
+            // post result
+            await context.PostAsync("Das Projekt wurde angelegt.");
+            context.Wait(HomeBotDialog);
         }
 
         private async Task AddOrDeleteTask(IDialogContext context, IAwaitable<string> result)
