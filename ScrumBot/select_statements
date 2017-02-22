@@ -1,0 +1,32 @@
+
+// select top five tasks where status is todo and 
+SELECT TOP (5)[Id]
+      ,[Titel]
+  FROM [SCRUM].[Aufgaben]
+  WHERE [STATUS] = 1
+  AND [ProjektId] = %VALUE%
+
+// select top five tasks where status is do and 
+SELECT TOP (5) [Id]
+	  ,[Titel]
+  FROM [SCRUM].[Aufgaben]
+  WHERE [STATUS] = 2
+  AND [ProjektId] =  %VALUE%
+
+// select top five tasks where status is done and 
+SELECT TOP (5) [Id]
+	  ,[Titel]
+  FROM [SCRUM].[Aufgaben]
+  WHERE [STATUS] = 3
+  AND [ProjektId] =  %VALUE%
+
+// delete task
+DELETE FROM [SCRUM].[Aufgaben]
+      WHERE [Id] = %VALUE%
+
+// select tasks in backlog for given project
+SELECT TOP (10)[Id]
+      ,[Titel]
+  FROM [SCRUM].[Aufgaben]
+  WHERE  [ProjektId] = %VALUE%
+  AND [SprintId] = null
